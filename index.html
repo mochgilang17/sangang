@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developed by mochgilangelangperkasa ()</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .paperwork-container {
+            width: 275mm;
+            background-color: #eaeaea;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        /* Header Style */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #8B2500;
+            letter-spacing: 2px;
+        }
+        .logo-text span {
+            color: #111;
+        }
+        .title-section {
+            text-align: center;
+            flex-grow: 1;
+            margin-right: 100px;
+        }
+        .title-section h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: normal;
+            color: #333;
+        }
+        .title-section h1 {
+            margin: 2px 0 0 0;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Top Grid Details */
+        .profile-grid {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        /* Interactive Photo Box */
+        .photo-box {
+            width: 280px;
+            height: 250px;
+            border: 2px solid #333;
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .photo-placeholder {
+            color: #aaa;
+            font-size: 13px;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .photo-box:hover .photo-placeholder {
+            color: #fff;
+        }
+        #file-input {
+            display: none;
+        }
+        
+        .info-tables {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        table, th, td {
+            border: 1px solid #333;
+        }
+        td {
+            padding: 2px 5px;
+            background-color: #fff;
+            height: 28px;
+            vertical-align: middle;
+        }
+        .label-cell {
+            width: 120px;
+            background-color: #f5f5f5;
+            text-align: right;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            padding-right: 15px;
+            user-select: none;
+        }
+
+        /* Form Inputs style */
+        input[type="text"] {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            padding: 0 5px;
+            box-sizing: border-box;
+            font-weight: bold;
+            background: transparent;
+        }
+
+        /* Criteria Section */
+        .criteria-container {
+            display: flex;
+            border: 2px solid #333;
+            margin-bottom: 15px;
+            background-color: #fff;
+        }
+        .criteria-title {
+            width: 120px;
+            background-color: #f5f5f5;
+            border-right: 1px solid #333;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: bold;
+            user-select: none;
+        }
+        .criteria-title span {
+            display: block;
+            font-weight: normal;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+        .criteria-list {
+            flex-grow: 1;
+        }
+        .criteria-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            user-select: none;
+        }
+        .criteria-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Interactive Checkbox Box */
+        .checkbox-box {
+            width: 60px;
+            height: 20px;
+            border-left: 1px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        .checkbox-tick {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #333;
+            background-color: #fff;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .checkbox-box.checked .checkbox-tick::after {
+            content: "✓";
+            position: absolute;
+            top: -4px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* Footer Section */
+        .footer-bar {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1.5fr 1fr;
+            border: 2px solid #333;
+            background-color: #f5f5f5;
+            font-size: 12px;
+        }
+        .footer-cell {
+            display: flex;
+            align-items: center;
+            border-right: 1px solid #333;
+        }
+        .footer-cell:last-child {
+            border-right: none;
+        }
+        .footer-label {
+            padding: 8px 10px;
+            font-weight: bold;
+            border-right: 1px solid #ccc;
+            background-color: #e8e8e8;
+            min-width: 50px;
+            user-select: none;
+        }
+        .footer-value {
+            background-color: #fff;
+            flex-grow: 1;
+            height: 100%;
+        }
+        .footer-value input {
+            height: 30px;
+        }
+        .copyright-notice {
+            margin-top: 10px;
+            font-size: 10px;
+            color: #777;
+            text-align: center;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .paperwork-container {
+                border: none;
+                background-color: #fff;
+                width: 100%;
+            }
+            .photo-placeholder {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="paperwork-container">
+    
+    <div class="header">
+        <div class="logo-text">SAN<span>GANG</span></div>
+        <div class="title-section">
+            <h3 style="color: #238A19;">SanGang</h3>
+            <h1>PERSON OF INTEREST</h1>
+        </div>
+    </div>
+
+    <div class="profile-grid">
+        <div class="photo-box" onclick="triggerFileInput()">
+            <div class="photo-placeholder" id="placeholder-text">KLIK DI SINI UNTUK UPLOAD FOTO</div>
+            <img id="output-image" alt="Suspect Photo">
+            <input type="file" id="file-input" accept="image/*" onchange="loadPhoto(event)">
+        </div>
+        
+        <div class="info-tables">
+            <table>
+                <tr>
+                    <td class="label-cell">NAME:</td>
+                    <td><input type="text" placeholder="Alfred Moruga"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">ALIASES:</td>
+                    <td><input type="text" placeholder="Alfred"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">AGE:</td>
+                    <td><input type="text" placeholder="35"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">ADDR.:</td>
+                    <td><input type="text" placeholder="Idlewood, Los Santos"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">PH #:</td>
+                    <td><input type="text" placeholder="555-0199"></td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <td class="label-cell">GANG:</td>
+                    <td><input type="text" placeholder="SANGANG"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">SET:</td>
+                    <td><input type="text" placeholder="Lil-Ases"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">RISK:</td>
+                    <td><input type="text" placeholder="HIGH RISK"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="criteria-container">
+        <div class="criteria-title">
+            CRITERIA:
+            <span>(at least 2)</span>
+        </div>
+        <div class="criteria-list">
+            <div class="criteria-item">
+                PERSON HAS ADMITTED TO BEING A GANG MEMBER (SELF ADMISSION)
+                <div class="checkbox-box" onclick="toggleCheck(this)"><div class="checkbox-tick"></div></div>
+            </div>
+            <div class="criteria-item">
+                PERSON HAS BEEN ARRESTED WITH KNOWN GANG MEMBERS FOR A SERIOUS OR VIOLENT FELONY
+                <div class="checkbox-box" onclick="toggleCheck(this)"><div class="checkbox-tick"></div></div>
+            </div>
+            <div class="criteria-item">
+                PERSON HAS BEEN IDENTIFIED BY A CREDIBLE INFORMANT (REGISTERED CONFIDENTIAL INFORMANT)
+                <div class="checkbox-box" onclick="toggleCheck(this)"><div class="checkbox-tick"></div></div>
+            </div>
+            <div class="criteria-item">
+                PERSON HAS BEEN DOCUMENTED DISPLAYING GANG SYMBOLS AND/OR HAND SIGNS
+                <div class="checkbox-box" onclick="toggleCheck(this)"><div class="checkbox-tick"></div></div>
+            </div>
+            <div class="criteria-item">
+                PERSON HAS BEEN DOCUMENTED HAVING GANG TATTOOS
+                <div class="checkbox-box" onclick="toggleCheck(this)"><div class="checkbox-tick"></div></div>
+            </div>
+            <div class="criteria-item">
+                PERSON HAS BEEN DOCUMENTED AFFILIATING WITH KNOWN, DOCUMENTED GANG MEMBERS
+                <div class="checkbox-box" onclick="toggleCheck(this)"><div class="checkbox-tick"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bar">
+        <div class="footer-cell">
+            <div class="footer-label">DEPT:</div>
+            <div class="footer-value"><input type="text" placeholder="LSSD"></div>
+        </div>
+        <div class="footer-cell">
+            <div class="footer-label">UNIT:</div>
+            <div class="footer-value"><input type="text" placeholder="OSS"></div>
+        </div>
+        <div class="footer-cell">
+            <div class="footer-label">OFCR:</div>
+            <div class="footer-value"><input type="text" placeholder="Ian Wahl"></div>
+        </div>
+        <div class="footer-cell">
+            <div class="footer-label">DATE:</div>
+            <div class="footer-value"><input type="date" placeholder="07/MAY/2025"></div>
+        </div>
+    </div>
+    <div class="copyright-notice">
+    © 2026 SanGang POI System. Designed & Developed by mochgilangelangperkasa All Rights Reserved. Unauthorized duplication is strictly prohibited.
+    </div>
+</div>
+
+<script>
+    function triggerFileInput() {
+        document.getElementById('file-input').click();
+    }
+
+    function loadPhoto(event) {
+        var image = document.getElementById('output-image');
+        var placeholder = document.getElementById('placeholder-text');
+        image.src = URL.createObjectURL(event.target.files[0]);
+        image.style.display = 'block';
+        placeholder.style.display = 'none';
+    }
+
+    function toggleCheck(element) {
+        element.classList.toggle('checked');
+    }
+</script>
+
+</body>
+</html>
